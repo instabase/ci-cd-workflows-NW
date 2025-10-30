@@ -5,38 +5,7 @@ The CI/CD workflows streamline the deployment of AI Hub applications across diff
 
 ---
 
-## Setup Instructions
-
-### 1. Prerequisites
-Before you begin, ensure you have the following:
-
-- Tokens for both the source and target Instabase environments with access to the app and project (service account tokens)
-- Access to the Instabase public repository `aihub-apps-ci-cd-workflows`.
-  - If you have access, you can clone the repository directly.
-  - If you do not have access, you need to manually add the workflows and `.whl` files to your repository. You can obtain these files by raising a Zendesk ticket.
-
-### 2. Setting Up Your Repository
-1. Create a new repository in your GitHub organization.
-2. If you have access to the Instabase public repository:
-   - Clone or download the repository (`aihub-apps-ci-cd-workflows`) locally.
-   - Copy the workflow `.yml` files to your new repository.
-   - Commit and push these files to the `main` branch of your repository.
-3. If you do not have access to the Instabase public repository:
-   - Obtain the `.whl` file and workflow `.yml` files by raising a Zendesk ticket.
-   - Add these files to your new repository.
-   - Commit and push these files to the `main` branch of your repository.
-
-### 3. GitHub Secrets Configuration
-To enable the CI/CD workflow, configure the following secrets in your GitHub repository’s **Actions and Secrets** tab:
-
-| Secret Name       | Description                                   |
-|-------------------|-----------------------------------------------|
-| `SOURCE_HOST_URL` | The URL of the source Instabase environment. |
-| `SOURCE_TOKEN`    | The authentication token for the source.     |
-| `TARGET_HOST_URL` | The URL of the target Instabase environment. |
-| `TARGET_TOKEN`    | The authentication token for the target.     |
-
-### 4. Configuration File Setup
+##Configuration File Setup
 1. Create a feature branch with a name starting as `feature/*` (required).
 2. Add a `config.json` file in your feature branch with the following structure:
 
@@ -117,8 +86,16 @@ Modify the `config.json` file with your project details.
 - Follow Git best practices such as pulling before committing, resolving merge conflicts, etc.
 
 ### 5. Migrate to Target Environment
-1. Once your app is ready for migration, merge the feature branch into the `main` branch by creating a pull request (PR).
-2. Upon merging the PR, the CI/CD workflow will be triggered, and the app will be migrated to the target environment.
+1. Once your app is ready for migration, ensure all changes are committed and pushed to your `feature/*` branch.
+2. The **Migrate to Target** workflow will be triggered automatically after the **Fetch Latest Code** workflow successfully completes on your `feature/*` branch—**merging into `main` is not required**.
+3. The migration workflow will:
+    - Validate your `config.json` and necessary fields.
+    - Install dependencies and migration toolkit.
+    - Create or update the project and app in the target environment, with rollback logic for failures.
+    - Create the deployment if specified.
+    - Create or update a Git tag for the app version.
+    - Roll back or delete builds if app creation fails.
+4. Monitor workflow progress and results in the PR checks or the GitHub Actions tab for your branch.
 
 ---
 
@@ -157,29 +134,3 @@ Modify the `config.json` file with your project details.
 ```
 
 ---
-
-## FAQs
-### How can I retrieve the workflows and `.whl` files if I don't have access to the Instabase repository?
-Raise a Zendesk ticket to obtain the workflows and `.whl` file from Instabase.
-
-### What should we do if we want to migrate multiple apps?
-Each app should have its own separate repository since the `main` branch always contains the latest data for one app.
-
-### What should we do if we want to utilize only the version control feature of app building?
-If you want to utilize only the version control feature of app building, follow these steps:
-1. You will only need to add SOURCE_TOKEN and SOURCE_HOST_URL in the repository’s secret.
-2. Create a feature branch with the config.
-3. Keep making changes to the release notes in config and commit the changes.
-4. The workflows will fetch the latest code on each commit and add it to the repository.
-
-### What access controls are in place for users to migrate apps?
-The following access controls are in place for users to migrate apps:
-1. The tokens used must have access to both the source and target environment, including the organization and workspaces involved in the migration.
-2. Only the repository owner can add secrets to the repository.
-3. Migration can only be performed from the feature branch
-
-### What rollback mechanisms are in place in case of failures?
-There are three steps in the migration process, each with a potential point of failure:
-1. If build project creation fails: There is nothing to roll back, so no action is needed.
-2. If a build project is created or updated, but app creation fails: If the project was updated, the changes will be reverted. If the project was newly created, it will be deleted.
-3. If both the build project and app are created, but deployment fails: This is a limitation. You will need to manually create the deployment in the target environment, as no rollback will occur.
