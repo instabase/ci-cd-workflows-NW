@@ -1,0 +1,23 @@
+{
+    "aiMajorVersion": "1",
+    "appReleaseVersion": "25.02",
+    "author": "Instabase",
+    "contextAccount": "ib-internal",
+    "createdAtMs": "1739256352000",
+    "description": "No release notes",
+    "id": "9b12c4a7-89f1-460c-ae93-b6eec9339cfc",
+    "isCustomizable": true,
+    "linkSharingMode": "OFF",
+    "metadata": "{\"authors\":[\"Instabase\"],\"billing_model\":\"default\",\"has_project_snapshot\":true,\"icon\":\"icon.png\",\"org_context_type\":\"ENTERPRISE\",\"project_id\":\"a4676a76-a340-40eb-9d33-d9f4603132e9\",\"results\":\"\",\"samples\":\"output/s1_process_files\",\"schema\":\"schema.json\"}",
+    "name": "Passport",
+    "owner": "Instabase",
+    "ownerFullName": "Instabase",
+    "solutionType": "EXTRACTION",
+    "solution_path": "system/global/fs/Instabase Drive/Applications/Deployed/All/9b12c4a7-89f1-460c-ae93-b6eec9339cfc",
+    "state": "ACTIVE",
+    "summary": "Extract identity information from any passport",
+    "updateMode": "UPDATE_WHEN_EXPIRED",
+    "updatedAtMs": "1739256371000",
+    "version": "1.0.1",
+    "visibility": "PUBLIC"
+}

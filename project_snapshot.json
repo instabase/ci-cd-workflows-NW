@@ -1,0 +1,808 @@
+{
+    "project_data": {
+        "createdAtMs": "1712147195000",
+        "creationBase": "NONE",
+        "dataMountPath": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9",
+        "description": "Sample Project",
+        "extractionMode": "CLASSIFICATION",
+        "id": "a4676a76-a340-40eb-9d33-d9f4603132e9",
+        "llm": "gpt-3.5-turbo",
+        "name": "Passport App",
+        "owner": "3fa8e6de-cf9a-4f14-8973-c84c93940fd7",
+        "ownerPublicId": "smile.garg_instabase.com",
+        "projectMountPath": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9",
+        "repoId": "98821aa8-fd02-43d9-9ae0-2b958213c050",
+        "schemaVersion": "1",
+        "settings": {
+            "doc_ai": {
+                "agent_mode_introduced": true,
+                "is_doc_ai_run": false,
+                "version": "v1"
+            }
+        },
+        "type": "BUILD",
+        "updatedAtMs": "1759131097000",
+        "workspace": "SolEng_workspace"
+    },
+    "project_schema": {
+        "case_fields": [],
+        "classes": {
+            "Other": {
+                "class_id": "30995",
+                "description": "",
+                "fields": []
+            },
+            "Passport": {
+                "class_id": "28922",
+                "description": "default Passport Document class",
+                "fields": [
+                    {
+                        "data_type": "TEXT",
+                        "description": "eturn the first name or given names of the person for whom the passport is issued.\n\nInclude the middle name from the middle name column if it exists, as it is typically mentioned below the given name.\n\nGiven name may or may not include one or more names.\n\nIf the names are in a single line, assume the last word is the surname or is mentioned below it.\n\nReturn only the Given Name(s), with no additional explanation or text.",
+                        "field_id": "54091",
+                        "field_visibility": "VISIBLE",
+                        "lines": [
+                            {
+                                "function_args": [],
+                                "function_id": null,
+                                "line_type": "PROMPT",
+                                "native_fn_name": null,
+                                "prompt": "only return name"
+                            }
+                        ],
+                        "model_type": "ADVANCED",
+                        "name": "Given Name",
+                        "position": 2,
+                        "prompt": "Extract the Given Name(s) of the Passport Holder \nReturn the given name(s) (i.e., first name and middle name, if present) of the person to whom the passport is issued.\nIf the \"Given Name(s)\" field is provided separately from the \"Surname\", return the full value of \"Given Name(s)\" as-it is.\nIf the full name appears on a single line.\nReturn all words as the given name(s).\nIf only one word is present in the name treat it as given name.\n\nExample: \n1. Given name: \nJOSE MARI, Middle name: DELA CRUZ\nthen given name is: JOSE MARI\n\n2.  Full name: \nNADIA EMILE MIKHAEL HANNA\nthen given name is: NADIA EMILE MIKHAEL \n\n3. Full name: OMNIA MOHAMED FOUAD ALY IBRAHIM \nGALAL\nthen given name is: OMNIA MOHAMED FOUAD ALY IBRAHIM GALAL\n\n4. Full name: ANANDANAYAGAM SHARVANANDAN\nthen given name is: ANANDANAYAGAM.\n\n5. Full name: VINCY PARANGOTTUKANDATHIL MATHAI SAMUEL\nthen given name is: VINCY PARANGOTTUKANDATHIL MATHAI\n\n6.  Full name: MOTAZ ABDELRAZZAQ SALAMEH ALMA'ANI\nthen given name is: MOTAZ ABDELRAZZAQ SALAMEH",
+                        "prompt_schema": null,
+                        "prompt_type": "advanced"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "Mostly surname is mentioned above given name. If it is in a single line the \"last\" word is the surname or mentioned below it. It can include two or more words.",
+                        "field_id": "54093",
+                        "field_visibility": "VISIBLE",
+                        "lines": [],
+                        "model_type": "ADVANCED",
+                        "name": "Surname",
+                        "position": 4,
+                        "prompt": "Extract the surname (last name or family name) from the passport using the following rules:\n\nLook for a field labeled \"Surname\", \"Apelyido\", \"Nom\", or similar. Return the exact full value.\n\nIf \"Surname\" and \"Given Name(s)\" are in separate fields, extract only the Surname value\u2014even if it's multiple words. If not clearly separated, return \"N/A\".\n\nDo not return middle names, given names, or maiden names.\n\nUse the MRZ (Machine Readable Zone) if printed fields are unclear. Take the word between the country code and the first < as the surname.\n\nIf no surname is found, return \"N/A\".\n\nEnsure correct spelling as written in the document. Do not assume, correct, or modify names.\n\n\ud83d\udccc Examples:\n\u2022 Name: ANANDANAYAGAM SHARVANANDAN \u2192 Return: SHARVANANDAN\n\u2022 Surname: CADORES, Given name: FRANCIS \u2192 Return: CADORES\n\u2022 MRZ: PHLGALITO<<ALBERTO<JR \u2192 Return: GALITO\n\u274c Do not return: GALING, ACAYAN, or guessed names.\n\n\nReturn only the surname. No extra text.",
+                        "prompt_schema": null,
+                        "prompt_type": "advanced"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "Return date of birth in mm/dd/yyyy format\nreturn n/a if no vaild date is present.",
+                        "field_id": "54095",
+                        "field_visibility": "VISIBLE",
+                        "lines": [
+                            {
+                                "function_args": [
+                                    {
+                                        "data_type": "TEXT",
+                                        "name": "input__format",
+                                        "value": "\"\""
+                                    },
+                                    {
+                                        "data_type": "TEXT",
+                                        "name": "output__format",
+                                        "value": "\"mmddyyyy\""
+                                    }
+                                ],
+                                "function_id": null,
+                                "line_type": "NATIVE",
+                                "native_fn_name": "format_date",
+                                "prompt": null
+                            }
+                        ],
+                        "model_type": "ADVANCED",
+                        "name": "Date Of Birth",
+                        "position": 3,
+                        "prompt": "Date Of Birth",
+                        "prompt_schema": null,
+                        "prompt_type": "basic"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "Extract the nationality of the passport holder using the rules below:\n\nLook for a field labeled \u201cNationality\u201d, \u201cNationalit\u00e9\u201d, or similar.\n\nReturn the exact English word written under this field.\n\u2022 If both local and English terms are present (e.g., \u201cFran\u00e7aise / French\u201d), return only the English word \u2192 \u201cFrench\u201d.\n\nDo not translate, guess, or shorten the value.\n\nDo not return any labels, extra text, or personal information.\n\nIf the nationality field is missing or unreadable, return \"N/A\".\n\nCorrect Examples:\n\u2022 Nationality: French \u2192 Return: French\n\u2022 Nationality: Filipino \u2192 Return: Filipino\n\u2022 Nationality: JOR \u2192 Return: JORDAN (keep as-is if it's the official format shown)\n\n\u274c Do not return:\n\u2022 \u201cNationality: Filipino\u201d \u2192 \u274c Only return \u2192 Filipino\n\u2022 \u201cFran\u00e7aise\u201d \u2192 \u274c Return \u2192 French",
+                        "field_id": "54097",
+                        "field_visibility": "VISIBLE",
+                        "lines": [
+                            {
+                                "function_args": [],
+                                "function_id": null,
+                                "line_type": "PROMPT",
+                                "native_fn_name": null,
+                                "prompt": "If the field contains both local and English terms (e.g., \u201cSVENSK SWEDISH\u201d),\nreturn only the English value (e.g., \u201cSwedish\u201d)."
+                            }
+                        ],
+                        "model_type": "ADVANCED",
+                        "name": "Nationality",
+                        "position": 6,
+                        "prompt": "Extract the nationality of the passport holder using the rules below:\n\nLook for a field labeled \u201cNationality\u201d, \u201cNationalit\u00e9\u201d, or similar.\n\nReturn the exact English word written under this field.\n\u2022 If both local and English terms are present (e.g., \u201cFran\u00e7aise / French\u201d), return only the English word \u2192 \u201cFrench\u201d.\n\nDo not translate, guess, or shorten the value.\n\nDo not return any labels, extra text, or personal information.\n\nIf the nationality field is missing or unreadable, return \"N/A\".\n\nCorrect Examples:\n\u2022 Nationality: French \u2192 Return: French\n\u2022 Nationality: Filipino \u2192 Return: Filipino\n\u2022 Nationality: JOR \u2192 Return: JORDAN (keep as-is if it's the official format shown)\n\nDo not return:\n\u2022 \u201cNationality: Filipino\u201d \u2192  Only return \u2192 Filipino\n\u2022 \u201cFran\u00e7aise\u201d \u2192  Return \u2192 French",
+                        "prompt_schema": null,
+                        "prompt_type": "advanced"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "The data under the column \"Passport Number\". The data will be always include alphabet and numbers. It will never be more than 9 characters and will never include special character.",
+                        "field_id": "54099",
+                        "field_visibility": "VISIBLE",
+                        "lines": [],
+                        "model_type": "ADVANCED",
+                        "name": "Passport Number",
+                        "position": 0,
+                        "prompt": "Passport Number",
+                        "prompt_schema": null,
+                        "prompt_type": "basic"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "given under the column of \"gender\" or \"sex\" and options are \"M\" or \"F\".",
+                        "field_id": "54101",
+                        "field_visibility": "VISIBLE",
+                        "lines": [],
+                        "model_type": "DEFAULT",
+                        "name": "Gender",
+                        "position": 5,
+                        "prompt": "Gender",
+                        "prompt_schema": null,
+                        "prompt_type": "basic"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "Passport type of the passport and return P if nothing is mentioned, usually mentioned under \"type\"",
+                        "field_id": "54103",
+                        "field_visibility": "VISIBLE",
+                        "lines": [],
+                        "model_type": "DEFAULT",
+                        "name": "Passport Type",
+                        "position": 1,
+                        "prompt": "Passport Type",
+                        "prompt_schema": null,
+                        "prompt_type": "basic"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "string return the country that issued the passport. The data is against the column \"country code\". The data will have 3 english alphabet only.",
+                        "field_id": "54105",
+                        "field_visibility": "VISIBLE",
+                        "lines": [],
+                        "model_type": "ADVANCED",
+                        "name": "Issuing Country",
+                        "position": 7,
+                        "prompt": "Issuing Country",
+                        "prompt_schema": null,
+                        "prompt_type": "basic"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "",
+                        "field_id": "60002",
+                        "field_visibility": "VISIBLE",
+                        "lines": [
+                            {
+                                "function_args": [],
+                                "function_id": 3184,
+                                "line_type": "UDF",
+                                "native_fn_name": null,
+                                "prompt": null
+                            }
+                        ],
+                        "model_type": "DEFAULT",
+                        "name": "MRZ",
+                        "position": 8,
+                        "prompt": "",
+                        "prompt_schema": null,
+                        "prompt_type": "udf"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "You are expert in document processing with a focus on extracting critical information from passports. Your task is to extract the value associated with \"Date of Issue\" in the format present in the document as it is which specifies when the passport was officially issued.\nNote :\n1) Do not consider \"Date of Issue\" from old passport number.\n2) Ignore any variations such as \"Issue date\", \"Date Issue\", \"RP Issue date\" etc.\n3) If the \"Date of issue\" cannot be found, return N/A.",
+                        "field_id": "196065",
+                        "field_visibility": "VISIBLE",
+                        "lines": [
+                            {
+                                "function_args": [
+                                    {
+                                        "data_type": "LINE",
+                                        "name": "previous_line",
+                                        "value": "Date Of Issue@0"
+                                    }
+                                ],
+                                "function_id": 3817,
+                                "line_type": "UDF",
+                                "native_fn_name": null,
+                                "prompt": null
+                            },
+                            {
+                                "function_args": [],
+                                "function_id": null,
+                                "line_type": "PROMPT",
+                                "native_fn_name": null,
+                                "prompt": "Step-1 : If the extracted value is 'N/A' or empty, return 'N/A'.\n\nStep-2 : If the extracted value does not contain 3 parts, then return the extracted value as it is.\n\nStep-3 : Otherwise, Maintain the extracted date format as it is, but just convert the month (second part in the extracted date) to English format.\n\nStep-4 : Make sure the month(second part in the date) appears only once in the extracted date.\n\nLet's think step by step"
+                            },
+                            {
+                                "function_args": [
+                                    {
+                                        "data_type": "TEXT",
+                                        "name": "input__format",
+                                        "value": "\"\""
+                                    },
+                                    {
+                                        "data_type": "TEXT",
+                                        "name": "output__format",
+                                        "value": "\"mmddyyyy\""
+                                    }
+                                ],
+                                "function_id": null,
+                                "line_type": "NATIVE",
+                                "native_fn_name": "format_date",
+                                "prompt": null
+                            }
+                        ],
+                        "model_type": "ADVANCED",
+                        "name": "Date Of Issue",
+                        "position": 9,
+                        "prompt": "Date Of Issue",
+                        "prompt_schema": null,
+                        "prompt_type": "basic"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "Your task is to only look for the keyword \"Date of Expiry\" within the document. Extract the date in the same format as it appears next to or near this phrase. \n\nNote :\n1) Ignore any variations like 'RP expiry date' or other similar terms.\n2) If the 'Date of Expiry' cannot be found, return 'N/A'.",
+                        "field_id": "196066",
+                        "field_visibility": "VISIBLE",
+                        "lines": [
+                            {
+                                "function_args": [
+                                    {
+                                        "data_type": "LINE",
+                                        "name": "previous_line",
+                                        "value": "Date Of Expiry@0"
+                                    }
+                                ],
+                                "function_id": 3818,
+                                "line_type": "UDF",
+                                "native_fn_name": null,
+                                "prompt": null
+                            },
+                            {
+                                "function_args": [],
+                                "function_id": null,
+                                "line_type": "PROMPT",
+                                "native_fn_name": null,
+                                "prompt": "Step-1 : If the extracted value is 'N/A' or empty, return 'N/A'.\n\nStep-2 : If the extracted value does not contain 3 parts, then return the extracted value as it is.\n\nStep-3 : Otherwise, Maintain the extracted date format as it is, but just convert the month (second part in the extracted date) to English format.\n\nStep-4 : Make sure the month(second part in the date) appears only once in the extracted date.\n\nLet's think step by step"
+                            },
+                            {
+                                "function_args": [
+                                    {
+                                        "data_type": "TEXT",
+                                        "name": "input__format",
+                                        "value": "\"\""
+                                    },
+                                    {
+                                        "data_type": "TEXT",
+                                        "name": "output__format",
+                                        "value": "\"mmddyyyy\""
+                                    }
+                                ],
+                                "function_id": null,
+                                "line_type": "NATIVE",
+                                "native_fn_name": "format_date",
+                                "prompt": null
+                            }
+                        ],
+                        "model_type": "ADVANCED",
+                        "name": "Date Of Expiry",
+                        "position": 10,
+                        "prompt": "Date Of Expiry",
+                        "prompt_schema": null,
+                        "prompt_type": "basic"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "You are expert in document processing with a focus on extracting critical information from passports. Your task is to extract the complete value for 'Place of Birth' in the format as it is and just return the value associated without any extra text.  \n\nSometimes alphabetical value for 'Place of birth' will appear after the gender(Male-M / Female-F) on passport. \n\nIf 'Place of Birth' is not found, return 'N/A.'",
+                        "field_id": "196067",
+                        "field_visibility": "VISIBLE",
+                        "lines": [
+                            {
+                                "function_args": [
+                                    {
+                                        "data_type": "LINE",
+                                        "name": "previous_line",
+                                        "value": "Place Of Birth@0"
+                                    }
+                                ],
+                                "function_id": 3820,
+                                "line_type": "UDF",
+                                "native_fn_name": null,
+                                "prompt": null
+                            }
+                        ],
+                        "model_type": "ADVANCED",
+                        "name": "Place Of Birth",
+                        "position": 11,
+                        "prompt": "You are expert in document processing with a focus on extracting critical information from passports. Your task is to extract the complete value for 'Place of Birth' in the format as it is and just return the value associated without any extra text.  \n\nSometimes alphabetical value for 'Place of birth' will appear after the gender(Male-M / Female-F) on passport. \n\nIf 'Place of Birth' is not found, return 'N/A.'",
+                        "prompt_schema": null,
+                        "prompt_type": "advanced"
+                    },
+                    {
+                        "data_type": "TEXT",
+                        "description": "",
+                        "field_id": "196068",
+                        "field_visibility": "VISIBLE",
+                        "lines": [
+                            {
+                                "function_args": [
+                                    {
+                                        "data_type": "LINE",
+                                        "name": "previous_line",
+                                        "value": "Issuing Authority@0"
+                                    }
+                                ],
+                                "function_id": 3821,
+                                "line_type": "UDF",
+                                "native_fn_name": null,
+                                "prompt": null
+                            }
+                        ],
+                        "model_type": "ADVANCED",
+                        "name": "Issuing Authority",
+                        "position": 12,
+                        "prompt": "Issuing Authority",
+                        "prompt_schema": null,
+                        "prompt_type": "advanced"
+                    }
+                ]
+            }
+        }
+    },
+    "project_udfs": {
+        "3178": {
+            "args": [
+                {
+                    "data_type": "FIELD",
+                    "name": "MRZ",
+                    "value": "MRZ"
+                }
+            ],
+            "code": "\n\ndef validate_MRZ(MRZ, context = {}, keys = {}, **kwargs):\n\t\n\tif len(MRZ) == 88:\n\t\t\treturn None\n\telse:\n\t\t\treturn \"Error: Wrong MRZ\"",
+            "docstring": null,
+            "function_code": "\t\n\tif len(MRZ) == 88:\n\t\t\treturn None\n\telse:\n\t\t\treturn \"Error: Wrong MRZ\"",
+            "id": 3178,
+            "lambda_udf_id": "v1:AWS_LAMBDA:7785892914:insaprd-use2-aihub-prd-docker-default-udf:7",
+            "most_recent_results_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/VALIDATIONS/789187ff-f0a8-4536-b981-b80f24cb04c6_output.json",
+            "name": "validate_MRZ",
+            "original_args": [],
+            "project_uuid": "a4676a76-a340-40eb-9d33-d9f4603132e9",
+            "return_type": "string",
+            "scripts_full_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/VALIDATIONS/789187ff-f0a8-4536-b981-b80f24cb04c6.json",
+            "shared_udf_imports": [],
+            "type": "VALIDATIONS"
+        },
+        "3184": {
+            "args": [],
+            "code": "\n\ndef extract_MRZ(context = {}, keys = {}, **kwargs):\n\t# Import Python packages\n\timport json\n\timport re\n\t\n\t# Split the document text by newline characters\n\ttext_split = context['document_text'].split(\"\\n\")\n\t\n\t# Filter lines containing the filler character '<' and with a length of at least 44 characters\n\tfiller_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\")[:44] for x in text_split if \"<\" in x and len(x.replace(\" \", \"\")) >= 44]\n\t))\n\t\n\t# Filter lines with exactly 44 characters after removing spaces\n\tnum_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\") for x in text_split if len(x.replace(\" \", \"\")) == 44]\n\t))\n\t\n\t# Initialize MRZ string\n\tmrz_str = \"\"\n\t\n\t# Check conditions to assign MRZ string\n\tif len(filler_char_filter) == 2:\n\t    mrz_str = \"\".join(filler_char_filter)\n\telif len(num_char_filter) == 2:\n\t    mrz_str = \"\".join(num_char_filter)\n\telse:\n\t    mrz_str = \"Unable to read MRZ\"\n\t\n\t# Return the desired output\n\treturn mrz_str\n\t",
+            "docstring": null,
+            "function_code": "\t# Import Python packages\n\timport json\n\timport re\n\t\n\t# Split the document text by newline characters\n\ttext_split = context['document_text'].split(\"\\n\")\n\t\n\t# Filter lines containing the filler character '<' and with a length of at least 44 characters\n\tfiller_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\")[:44] for x in text_split if \"<\" in x and len(x.replace(\" \", \"\")) >= 44]\n\t))\n\t\n\t# Filter lines with exactly 44 characters after removing spaces\n\tnum_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\") for x in text_split if len(x.replace(\" \", \"\")) == 44]\n\t))\n\t\n\t# Initialize MRZ string\n\tmrz_str = \"\"\n\t\n\t# Check conditions to assign MRZ string\n\tif len(filler_char_filter) == 2:\n\t    mrz_str = \"\".join(filler_char_filter)\n\telif len(num_char_filter) == 2:\n\t    mrz_str = \"\".join(num_char_filter)\n\telse:\n\t    mrz_str = \"Unable to read MRZ\"\n\t\n\t# Return the desired output\n\treturn mrz_str\n\t",
+            "id": 3184,
+            "lambda_udf_id": "v1:AWS_LAMBDA:2528928707:insaprd-use2-aihub-prd-docker-default-udf:7",
+            "most_recent_results_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/9b074720-4600-4980-82ab-b200fd312909_output.json",
+            "name": "extract_MRZ",
+            "original_args": [],
+            "project_uuid": "a4676a76-a340-40eb-9d33-d9f4603132e9",
+            "return_type": "string",
+            "scripts_full_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/9b074720-4600-4980-82ab-b200fd312909.json",
+            "shared_udf_imports": [],
+            "type": "REFINER"
+        },
+        "3817": {
+            "args": [
+                {
+                    "data_type": "LINE",
+                    "name": "previous_line",
+                    "value": "Date Of Issue@0"
+                }
+            ],
+            "code": "\n\ndef remove_unwanted_chars(previous_line, context = {}, keys = {}, **kwargs):\n\tif previous_line:\n\t  previous_line = previous_line.lower()\n\t  previous_line = previous_line.replace(\"date\",\"\").replace(\"of\",\"\").replace(\"issue\",\"\").replace(\".\",\" \")\n\t  return previous_line.upper()\n\telse:\n\t  return 'N/A'",
+            "docstring": null,
+            "function_code": "\tif previous_line:\n\t  previous_line = previous_line.lower()\n\t  previous_line = previous_line.replace(\"date\",\"\").replace(\"of\",\"\").replace(\"issue\",\"\").replace(\".\",\" \")\n\t  return previous_line.upper()\n\telse:\n\t  return 'N/A'",
+            "id": 3817,
+            "lambda_udf_id": "v1:AWS_LAMBDA:2027135174:insaprd-use2-aihub-prd-docker-default-udf:7",
+            "most_recent_results_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/f0078c3c-ab05-4f9d-8ffc-1261d98a3f33_output.json",
+            "name": "remove_unwanted_chars",
+            "original_args": [],
+            "project_uuid": "a4676a76-a340-40eb-9d33-d9f4603132e9",
+            "return_type": "string",
+            "scripts_full_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/f0078c3c-ab05-4f9d-8ffc-1261d98a3f33.json",
+            "shared_udf_imports": [],
+            "type": "REFINER"
+        },
+        "3818": {
+            "args": [
+                {
+                    "data_type": "LINE",
+                    "name": "previous_line",
+                    "value": "Date Of Expiry@0"
+                }
+            ],
+            "code": "\n\ndef remove_unwanted_chars(previous_line, context = {}, keys = {}, **kwargs):\n\tif previous_line:\n\t  return previous_line.replace(\".\",\" \").lower()\n\telse:\n\t  return 'N/A'",
+            "docstring": null,
+            "function_code": "\tif previous_line:\n\t  return previous_line.replace(\".\",\" \").lower()\n\telse:\n\t  return 'N/A'",
+            "id": 3818,
+            "lambda_udf_id": "v1:AWS_LAMBDA:1353369368:insaprd-use2-aihub-prd-docker-default-udf:7",
+            "most_recent_results_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/a83cf888-05ba-485f-a642-6dcc383e95ad_output.json",
+            "name": "remove_unwanted_chars",
+            "original_args": [],
+            "project_uuid": "a4676a76-a340-40eb-9d33-d9f4603132e9",
+            "return_type": "string",
+            "scripts_full_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/a83cf888-05ba-485f-a642-6dcc383e95ad.json",
+            "shared_udf_imports": [],
+            "type": "REFINER"
+        },
+        "3820": {
+            "args": [
+                {
+                    "data_type": "LINE",
+                    "name": "previous_line",
+                    "value": "Place Of Birth@0"
+                }
+            ],
+            "code": "\n\ndef format_result(previous_line, context = {}, keys = {}, **kwargs):\n\tif previous_line.strip() == \"\":\n\t  return 'N/A'\n\telse:\n\t  previous_line =  previous_line.strip()\n\t  if ' ' in previous_line:\n\t    ls = previous_line.split()\n\t    return ' '.join(ls)\n\t  return previous_line",
+            "docstring": null,
+            "function_code": "\tif previous_line.strip() == \"\":\n\t  return 'N/A'\n\telse:\n\t  previous_line =  previous_line.strip()\n\t  if ' ' in previous_line:\n\t    ls = previous_line.split()\n\t    return ' '.join(ls)\n\t  return previous_line",
+            "id": 3820,
+            "lambda_udf_id": "v1:AWS_LAMBDA:3398062610:insaprd-use2-aihub-prd-docker-default-udf:7",
+            "most_recent_results_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/ed630060-0649-4dc3-b9a5-306d91c4ad2f_output.json",
+            "name": "format_result",
+            "original_args": [],
+            "project_uuid": "a4676a76-a340-40eb-9d33-d9f4603132e9",
+            "return_type": "string",
+            "scripts_full_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/ed630060-0649-4dc3-b9a5-306d91c4ad2f.json",
+            "shared_udf_imports": [],
+            "type": "REFINER"
+        },
+        "3821": {
+            "args": [
+                {
+                    "data_type": "LINE",
+                    "name": "previous_line",
+                    "value": "Issuing Authority@0"
+                }
+            ],
+            "code": "\n\ndef format_result(previous_line, context = {}, keys = {}, **kwargs):\n\tif previous_line.strip() == \"\":\n\t  return 'N/A'\n\telse:\n\t  previous_line =  previous_line.strip()\n\t  if ' ' in previous_line:\n\t    ls = previous_line.split()\n\t    return ' '.join(ls)\n\t  return previous_line",
+            "docstring": null,
+            "function_code": "\tif previous_line.strip() == \"\":\n\t  return 'N/A'\n\telse:\n\t  previous_line =  previous_line.strip()\n\t  if ' ' in previous_line:\n\t    ls = previous_line.split()\n\t    return ' '.join(ls)\n\t  return previous_line",
+            "id": 3821,
+            "lambda_udf_id": "v1:AWS_LAMBDA:1923295259:insaprd-use2-aihub-prd-docker-default-udf:7",
+            "most_recent_results_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/abd20fab-e3d2-4ce9-8544-92a3eb005b70_output.json",
+            "name": "format_result",
+            "original_args": [],
+            "project_uuid": "a4676a76-a340-40eb-9d33-d9f4603132e9",
+            "return_type": "string",
+            "scripts_full_path": "ib-internal/SolEng_workspace/fs/Instabase Drive/aihub/a4676a76-a340-40eb-9d33-d9f4603132e9/project/modules/scripts/REFINER/abd20fab-e3d2-4ce9-8544-92a3eb005b70.json",
+            "shared_udf_imports": [],
+            "type": "REFINER"
+        }
+    },
+    "project_validations": [
+        {
+            "affected_fields": [
+                54099
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1713265630000,
+            "description": "",
+            "id": 986,
+            "input_fields": [
+                54099
+            ],
+            "name": "Rule 1",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1714374844000
+        },
+        {
+            "affected_fields": [
+                196065
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1728888542000,
+            "description": "",
+            "id": 3482,
+            "input_fields": [
+                196065
+            ],
+            "name": "Rule 10",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1728888542000
+        },
+        {
+            "affected_fields": [
+                196066
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1728888555000,
+            "description": "",
+            "id": 3483,
+            "input_fields": [
+                196066
+            ],
+            "name": "Rule 11",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1728888555000
+        },
+        {
+            "affected_fields": [
+                196067
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1728888570000,
+            "description": "",
+            "id": 3484,
+            "input_fields": [
+                196067
+            ],
+            "name": "Rule 12",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1728888570000
+        },
+        {
+            "affected_fields": [
+                196068
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1728888582000,
+            "description": "",
+            "id": 3485,
+            "input_fields": [
+                196068
+            ],
+            "name": "Rule 13",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1728888582000
+        },
+        {
+            "affected_fields": [
+                54103
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1713265688000,
+            "description": "",
+            "id": 987,
+            "input_fields": [
+                54103
+            ],
+            "name": "Rule 2",
+            "params": {
+                "confidence_threshold": 0.9
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1714374845000
+        },
+        {
+            "affected_fields": [
+                54091
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1713265712000,
+            "description": "",
+            "id": 988,
+            "input_fields": [
+                54091
+            ],
+            "name": "Rule 3",
+            "params": {
+                "confidence_threshold": 0.8
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1714374845000
+        },
+        {
+            "affected_fields": [
+                54093
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1713265730000,
+            "description": "",
+            "id": 989,
+            "input_fields": [
+                54093
+            ],
+            "name": "Rule 4",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1714374845000
+        },
+        {
+            "affected_fields": [
+                54095
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1713265752000,
+            "description": "",
+            "id": 990,
+            "input_fields": [
+                54095
+            ],
+            "name": "Rule 5",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1747229268000
+        },
+        {
+            "affected_fields": [
+                54101
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1713265784000,
+            "description": "",
+            "id": 991,
+            "input_fields": [
+                54101
+            ],
+            "name": "Rule 6",
+            "params": {
+                "confidence_threshold": 0.9
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1714374845000
+        },
+        {
+            "affected_fields": [
+                54097
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1713265798000,
+            "description": "",
+            "id": 992,
+            "input_fields": [
+                54097
+            ],
+            "name": "Rule 7",
+            "params": {
+                "confidence_threshold": 0.85
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1714374845000
+        },
+        {
+            "affected_fields": [
+                54105
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1713265811000,
+            "description": "",
+            "id": 993,
+            "input_fields": [
+                54105
+            ],
+            "name": "Rule 8",
+            "params": {
+                "confidence_threshold": 0.95
+            },
+            "scope": "FIELD",
+            "type": "CONFIDENCE",
+            "updated_at": 1714374845000
+        },
+        {
+            "affected_fields": [
+                60002
+            ],
+            "alert_level": "FAILURE",
+            "created_at": 1726040787000,
+            "description": "",
+            "id": 2862,
+            "input_fields": [
+                60002
+            ],
+            "name": "Rule 9",
+            "params": {
+                "udf_id": 3178
+            },
+            "scope": "FIELD",
+            "type": "UDF",
+            "updated_at": 1726047332000
+        }
+    ],
+    "reader_profile": {
+        "createdBy": "",
+        "createdOn": 1712147194154,
+        "defaultProfile": "",
+        "foundationVersion": "",
+        "inputPath": null,
+        "lastModifiedBy": "",
+        "lastModifiedOn": 1712147194154,
+        "outputPath": null,
+        "profiles": [
+            {
+                "entitySettings": [],
+                "name": "aihub",
+                "readSettings": {
+                    "cache_pdf_results": false,
+                    "correct_inversion": false,
+                    "correct_orientation": false,
+                    "correct_resolution": false,
+                    "correct_resolution_auto": false,
+                    "detect_barcodes": false,
+                    "detect_blurry_files": false,
+                    "dewarp_page": true,
+                    "document_mapping": "document_is_record_skip_empty_page",
+                    "enable_ibdoc_v2": true,
+                    "encryption_config": null,
+                    "entity_models": [
+                        {
+                            "model_name": "signature_model",
+                            "model_version": "0.0.4"
+                        },
+                        {
+                            "model_name": "barcode_qrcode_detection",
+                            "model_version": "1.0.0"
+                        }
+                    ],
+                    "extract_all_pdf_layers": true,
+                    "find_lines": false,
+                    "fonts": null,
+                    "force_image_ocr": false,
+                    "image_filters": null,
+                    "languages": null,
+                    "layout_algorithm": "layout_algo_spatial",
+                    "model_specific_settings": {
+                        "marx_v1": {
+                            "version": "v3"
+                        }
+                    },
+                    "ocr_page_type": "marx",
+                    "ocr_timeout": null,
+                    "output_format_layout": "layout_per_page",
+                    "output_formats": null,
+                    "page_range_str": "",
+                    "process_type": "auto_to_txt",
+                    "produce_metadata_list": true,
+                    "produce_word_metadata": true,
+                    "remove_boxes": false,
+                    "remove_boxes_over_height_percent": null,
+                    "remove_boxes_over_width_percent": null,
+                    "remove_space_wordpolys": true,
+                    "remove_vertical_text": false,
+                    "reorient_words": false,
+                    "repair_pdfs": false,
+                    "scripts_dir": "",
+                    "write_converted_image": true,
+                    "write_thumbnail": true
+                }
+            }
+        ],
+        "schema": "1"
+    }
+}

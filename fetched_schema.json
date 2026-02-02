@@ -1,0 +1,320 @@
+{
+    "28922": {
+        "description": "default Passport Document class",
+        "fields": {
+            "196065": {
+                "data_type": "TEXT",
+                "description": "You are expert in document processing with a focus on extracting critical information from passports. Your task is to extract the value associated with \"Date of Issue\" in the format present in the document as it is which specifies when the passport was officially issued.\nNote :\n1) Do not consider \"Date of Issue\" from old passport number.\n2) Ignore any variations such as \"Issue date\", \"Date Issue\", \"RP Issue date\" etc.\n3) If the \"Date of issue\" cannot be found, return N/A.",
+                "field_visibility": "VISIBLE",
+                "lines": [
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "LINE",
+                                "name": "previous_line",
+                                "value": "Date Of Issue@0"
+                            }
+                        ],
+                        "function_id": 3817,
+                        "line_type": "UDF",
+                        "native_fn_name": null,
+                        "prompt": null
+                    },
+                    {
+                        "function_args": [],
+                        "function_id": null,
+                        "line_type": "PROMPT",
+                        "native_fn_name": null,
+                        "prompt": "Step-1 : If the extracted value is 'N/A' or empty, return 'N/A'.\n\nStep-2 : If the extracted value does not contain 3 parts, then return the extracted value as it is.\n\nStep-3 : Otherwise, Maintain the extracted date format as it is, but just convert the month (second part in the extracted date) to English format.\n\nStep-4 : Make sure the month(second part in the date) appears only once in the extracted date.\n\nLet's think step by step"
+                    },
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "TEXT",
+                                "name": "input__format",
+                                "value": "\"\""
+                            },
+                            {
+                                "data_type": "TEXT",
+                                "name": "output__format",
+                                "value": "\"mmddyyyy\""
+                            }
+                        ],
+                        "function_id": null,
+                        "line_type": "NATIVE",
+                        "native_fn_name": "format_date",
+                        "prompt": null
+                    }
+                ],
+                "model_type": "ADVANCED",
+                "name": "Date Of Issue",
+                "position": 9,
+                "prompt": "Date Of Issue",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "196066": {
+                "data_type": "TEXT",
+                "description": "Your task is to only look for the keyword \"Date of Expiry\" within the document. Extract the date in the same format as it appears next to or near this phrase. \n\nNote :\n1) Ignore any variations like 'RP expiry date' or other similar terms.\n2) If the 'Date of Expiry' cannot be found, return 'N/A'.",
+                "field_visibility": "VISIBLE",
+                "lines": [
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "LINE",
+                                "name": "previous_line",
+                                "value": "Date Of Expiry@0"
+                            }
+                        ],
+                        "function_id": 3818,
+                        "line_type": "UDF",
+                        "native_fn_name": null,
+                        "prompt": null
+                    },
+                    {
+                        "function_args": [],
+                        "function_id": null,
+                        "line_type": "PROMPT",
+                        "native_fn_name": null,
+                        "prompt": "Step-1 : If the extracted value is 'N/A' or empty, return 'N/A'.\n\nStep-2 : If the extracted value does not contain 3 parts, then return the extracted value as it is.\n\nStep-3 : Otherwise, Maintain the extracted date format as it is, but just convert the month (second part in the extracted date) to English format.\n\nStep-4 : Make sure the month(second part in the date) appears only once in the extracted date.\n\nLet's think step by step"
+                    },
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "TEXT",
+                                "name": "input__format",
+                                "value": "\"\""
+                            },
+                            {
+                                "data_type": "TEXT",
+                                "name": "output__format",
+                                "value": "\"mmddyyyy\""
+                            }
+                        ],
+                        "function_id": null,
+                        "line_type": "NATIVE",
+                        "native_fn_name": "format_date",
+                        "prompt": null
+                    }
+                ],
+                "model_type": "ADVANCED",
+                "name": "Date Of Expiry",
+                "position": 10,
+                "prompt": "Date Of Expiry",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "196067": {
+                "data_type": "TEXT",
+                "description": "You are expert in document processing with a focus on extracting critical information from passports. Your task is to extract the complete value for 'Place of Birth' in the format as it is and just return the value associated without any extra text.  \n\nSometimes alphabetical value for 'Place of birth' will appear after the gender(Male-M / Female-F) on passport. \n\nIf 'Place of Birth' is not found, return 'N/A.'",
+                "field_visibility": "VISIBLE",
+                "lines": [
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "LINE",
+                                "name": "previous_line",
+                                "value": "Place Of Birth@0"
+                            }
+                        ],
+                        "function_id": 3820,
+                        "line_type": "UDF",
+                        "native_fn_name": null,
+                        "prompt": null
+                    }
+                ],
+                "model_type": "ADVANCED",
+                "name": "Place Of Birth",
+                "position": 11,
+                "prompt": "You are expert in document processing with a focus on extracting critical information from passports. Your task is to extract the complete value for 'Place of Birth' in the format as it is and just return the value associated without any extra text.  \n\nSometimes alphabetical value for 'Place of birth' will appear after the gender(Male-M / Female-F) on passport. \n\nIf 'Place of Birth' is not found, return 'N/A.'",
+                "prompt_schema": null,
+                "prompt_type": "advanced"
+            },
+            "196068": {
+                "data_type": "TEXT",
+                "description": "",
+                "field_visibility": "VISIBLE",
+                "lines": [
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "LINE",
+                                "name": "previous_line",
+                                "value": "Issuing Authority@0"
+                            }
+                        ],
+                        "function_id": 3821,
+                        "line_type": "UDF",
+                        "native_fn_name": null,
+                        "prompt": null
+                    }
+                ],
+                "model_type": "ADVANCED",
+                "name": "Issuing Authority",
+                "position": 12,
+                "prompt": "Issuing Authority",
+                "prompt_schema": null,
+                "prompt_type": "advanced"
+            },
+            "54091": {
+                "data_type": "TEXT",
+                "description": "eturn the first name or given names of the person for whom the passport is issued.\n\nInclude the middle name from the middle name column if it exists, as it is typically mentioned below the given name.\n\nGiven name may or may not include one or more names.\n\nIf the names are in a single line, assume the last word is the surname or is mentioned below it.\n\nReturn only the Given Name(s), with no additional explanation or text.",
+                "field_visibility": "VISIBLE",
+                "lines": [
+                    {
+                        "function_args": [],
+                        "function_id": null,
+                        "line_type": "PROMPT",
+                        "native_fn_name": null,
+                        "prompt": "only return name"
+                    }
+                ],
+                "model_type": "ADVANCED",
+                "name": "Given Name",
+                "position": 2,
+                "prompt": "Extract the Given Name(s) of the Passport Holder \nReturn the given name(s) (i.e., first name and middle name, if present) of the person to whom the passport is issued.\nIf the \"Given Name(s)\" field is provided separately from the \"Surname\", return the full value of \"Given Name(s)\" as-it is.\nIf the full name appears on a single line.\nReturn all words as the given name(s).\nIf only one word is present in the name treat it as given name.\n\nExample: \n1. Given name: \nJOSE MARI, Middle name: DELA CRUZ\nthen given name is: JOSE MARI\n\n2.  Full name: \nNADIA EMILE MIKHAEL HANNA\nthen given name is: NADIA EMILE MIKHAEL \n\n3. Full name: OMNIA MOHAMED FOUAD ALY IBRAHIM \nGALAL\nthen given name is: OMNIA MOHAMED FOUAD ALY IBRAHIM GALAL\n\n4. Full name: ANANDANAYAGAM SHARVANANDAN\nthen given name is: ANANDANAYAGAM.\n\n5. Full name: VINCY PARANGOTTUKANDATHIL MATHAI SAMUEL\nthen given name is: VINCY PARANGOTTUKANDATHIL MATHAI\n\n6.  Full name: MOTAZ ABDELRAZZAQ SALAMEH ALMA'ANI\nthen given name is: MOTAZ ABDELRAZZAQ SALAMEH",
+                "prompt_schema": null,
+                "prompt_type": "advanced"
+            },
+            "54093": {
+                "data_type": "TEXT",
+                "description": "Mostly surname is mentioned above given name. If it is in a single line the \"last\" word is the surname or mentioned below it. It can include two or more words.",
+                "field_visibility": "VISIBLE",
+                "lines": [],
+                "model_type": "ADVANCED",
+                "name": "Surname",
+                "position": 4,
+                "prompt": "Extract the surname (last name or family name) from the passport using the following rules:\n\nLook for a field labeled \"Surname\", \"Apelyido\", \"Nom\", or similar. Return the exact full value.\n\nIf \"Surname\" and \"Given Name(s)\" are in separate fields, extract only the Surname value\u2014even if it's multiple words. If not clearly separated, return \"N/A\".\n\nDo not return middle names, given names, or maiden names.\n\nUse the MRZ (Machine Readable Zone) if printed fields are unclear. Take the word between the country code and the first < as the surname.\n\nIf no surname is found, return \"N/A\".\n\nEnsure correct spelling as written in the document. Do not assume, correct, or modify names.\n\n\ud83d\udccc Examples:\n\u2022 Name: ANANDANAYAGAM SHARVANANDAN \u2192 Return: SHARVANANDAN\n\u2022 Surname: CADORES, Given name: FRANCIS \u2192 Return: CADORES\n\u2022 MRZ: PHLGALITO<<ALBERTO<JR \u2192 Return: GALITO\n\u274c Do not return: GALING, ACAYAN, or guessed names.\n\n\nReturn only the surname. No extra text.",
+                "prompt_schema": null,
+                "prompt_type": "advanced"
+            },
+            "54095": {
+                "data_type": "TEXT",
+                "description": "Return date of birth in mm/dd/yyyy format\nreturn n/a if no vaild date is present.",
+                "field_visibility": "VISIBLE",
+                "lines": [
+                    {
+                        "function_args": [
+                            {
+                                "data_type": "TEXT",
+                                "name": "input__format",
+                                "value": "\"\""
+                            },
+                            {
+                                "data_type": "TEXT",
+                                "name": "output__format",
+                                "value": "\"mmddyyyy\""
+                            }
+                        ],
+                        "function_id": null,
+                        "line_type": "NATIVE",
+                        "native_fn_name": "format_date",
+                        "prompt": null
+                    }
+                ],
+                "model_type": "ADVANCED",
+                "name": "Date Of Birth",
+                "position": 3,
+                "prompt": "Date Of Birth",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "54097": {
+                "data_type": "TEXT",
+                "description": "Extract the nationality of the passport holder using the rules below:\n\nLook for a field labeled \u201cNationality\u201d, \u201cNationalit\u00e9\u201d, or similar.\n\nReturn the exact English word written under this field.\n\u2022 If both local and English terms are present (e.g., \u201cFran\u00e7aise / French\u201d), return only the English word \u2192 \u201cFrench\u201d.\n\nDo not translate, guess, or shorten the value.\n\nDo not return any labels, extra text, or personal information.\n\nIf the nationality field is missing or unreadable, return \"N/A\".\n\nCorrect Examples:\n\u2022 Nationality: French \u2192 Return: French\n\u2022 Nationality: Filipino \u2192 Return: Filipino\n\u2022 Nationality: JOR \u2192 Return: JORDAN (keep as-is if it's the official format shown)\n\n\u274c Do not return:\n\u2022 \u201cNationality: Filipino\u201d \u2192 \u274c Only return \u2192 Filipino\n\u2022 \u201cFran\u00e7aise\u201d \u2192 \u274c Return \u2192 French",
+                "field_visibility": "VISIBLE",
+                "lines": [
+                    {
+                        "function_args": [],
+                        "function_id": null,
+                        "line_type": "PROMPT",
+                        "native_fn_name": null,
+                        "prompt": "If the field contains both local and English terms (e.g., \u201cSVENSK SWEDISH\u201d),\nreturn only the English value (e.g., \u201cSwedish\u201d)."
+                    }
+                ],
+                "model_type": "ADVANCED",
+                "name": "Nationality",
+                "position": 6,
+                "prompt": "Extract the nationality of the passport holder using the rules below:\n\nLook for a field labeled \u201cNationality\u201d, \u201cNationalit\u00e9\u201d, or similar.\n\nReturn the exact English word written under this field.\n\u2022 If both local and English terms are present (e.g., \u201cFran\u00e7aise / French\u201d), return only the English word \u2192 \u201cFrench\u201d.\n\nDo not translate, guess, or shorten the value.\n\nDo not return any labels, extra text, or personal information.\n\nIf the nationality field is missing or unreadable, return \"N/A\".\n\nCorrect Examples:\n\u2022 Nationality: French \u2192 Return: French\n\u2022 Nationality: Filipino \u2192 Return: Filipino\n\u2022 Nationality: JOR \u2192 Return: JORDAN (keep as-is if it's the official format shown)\n\nDo not return:\n\u2022 \u201cNationality: Filipino\u201d \u2192  Only return \u2192 Filipino\n\u2022 \u201cFran\u00e7aise\u201d \u2192  Return \u2192 French",
+                "prompt_schema": null,
+                "prompt_type": "advanced"
+            },
+            "54099": {
+                "data_type": "TEXT",
+                "description": "The data under the column \"Passport Number\". The data will be always include alphabet and numbers. It will never be more than 9 characters and will never include special character.",
+                "field_visibility": "VISIBLE",
+                "lines": [],
+                "model_type": "ADVANCED",
+                "name": "Passport Number",
+                "position": 0,
+                "prompt": "Passport Number",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "54101": {
+                "data_type": "TEXT",
+                "description": "given under the column of \"gender\" or \"sex\" and options are \"M\" or \"F\".",
+                "field_visibility": "VISIBLE",
+                "lines": [],
+                "model_type": "DEFAULT",
+                "name": "Gender",
+                "position": 5,
+                "prompt": "Gender",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "54103": {
+                "data_type": "TEXT",
+                "description": "Passport type of the passport and return P if nothing is mentioned, usually mentioned under \"type\"",
+                "field_visibility": "VISIBLE",
+                "lines": [],
+                "model_type": "DEFAULT",
+                "name": "Passport Type",
+                "position": 1,
+                "prompt": "Passport Type",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "54105": {
+                "data_type": "TEXT",
+                "description": "string return the country that issued the passport. The data is against the column \"country code\". The data will have 3 english alphabet only.",
+                "field_visibility": "VISIBLE",
+                "lines": [],
+                "model_type": "ADVANCED",
+                "name": "Issuing Country",
+                "position": 7,
+                "prompt": "Issuing Country",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "60002": {
+                "data_type": "TEXT",
+                "description": "",
+                "field_visibility": "VISIBLE",
+                "lines": [
+                    {
+                        "function_args": [],
+                        "function_id": 3184,
+                        "line_type": "UDF",
+                        "native_fn_name": null,
+                        "prompt": null
+                    }
+                ],
+                "model_type": "DEFAULT",
+                "name": "MRZ",
+                "position": 8,
+                "prompt": "",
+                "prompt_schema": null,
+                "prompt_type": "udf"
+            }
+        },
+        "name": "Passport"
+    },
+    "30995": {
+        "description": "",
+        "fields": {},
+        "name": "Other"
+    },
+    "last_edited_at": "1760460712000",
+    "last_edited_class_at": "1749839872000"
+}
