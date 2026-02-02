@@ -1,0 +1,19 @@
+{
+    "source": {
+      "is_advanced": false,
+      "project_id": "a4676a76-a340-40eb-9d33-d9f4603132e9",
+      "org": "ib-internal",
+      "workspace": "SolEng_workspace",
+      "app_id": "d7ea3f3e-156a-4ed5-8f68-06fa68058b60"
+    },
+    "target": {
+      "org": "nationwidemtls",
+      "workspace": "test",
+      "project_id": ""
+    },
+    "settings": {
+      "rebuild": true
+    },
+    "regression": {},
+    "release_notes": "Testing build project migration from nationwidemtls to ib-internal"
+}
