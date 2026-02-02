@@ -56,19 +56,19 @@ jobs:
             echo "No local .whl file found. Attempting to install from GitHub release."
             # Use GH_PAT for authentication to access private/restricted repos
             LATEST_RELEASE=$(curl -s -H "Authorization: token ${GH_PAT}" \
-              https://api.github.com/repos/samyak-ib/ci-cd-toolkit-for-NW/releases/latest | jq -r .tag_name)
+              https://api.github.com/repos/instabase/ci-cd-toolkit-NW/releases/latest | jq -r .tag_name)
             VERSION=$(echo $LATEST_RELEASE | sed 's/^v//')
             echo "Latest release: ${LATEST_RELEASE}, Version: ${VERSION}"
             
             # Download the wheel file with authentication
             ASSET_ID=$(curl -s -H "Authorization: token ${GH_PAT}" \
-              https://api.github.com/repos/samyak-ib/ci-cd-toolkit-for-NW/releases/latest | \
+              https://api.github.com/repos/instabase/ci-cd-toolkit-NW/releases/latest | \
               jq -r '.assets[] | select(.name | contains(".whl")) | .id')
             
             curl -L -o cicd_aihub-${VERSION}-py3-none-any.whl \
               -H "Authorization: token ${GH_PAT}" \
               -H "Accept: application/octet-stream" \
-              "https://api.github.com/repos/samyak-ib/ci-cd-toolkit-for-NW/releases/assets/${ASSET_ID}"
+              "https://api.github.com/repos/instabase/ci-cd-toolkit-NW/releases/assets/${ASSET_ID}"
             
             if ! pipx install cicd_aihub-${VERSION}-py3-none-any.whl; then
               echo "Failed to install from GitHub release after failing to find local .whl file. Aborting."
