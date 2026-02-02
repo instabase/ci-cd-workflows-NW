@@ -25,6 +25,7 @@ jobs:
       PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }} 
       PROXY_HOST: ${{ secrets.PROXY_HOST }}
       PROXY_PORT: ${{ secrets.PROXY_PORT }}
+      GH_PAT: ${{ secrets.GH_PAT }}
       
     steps:
       - name: Check out code
@@ -59,10 +60,23 @@ jobs:
             pipx install cicd_aihub-${VERSION}-py3-none-any.whl
           else
             echo "No local .whl file found. Attempting to install from GitHub release."
-            LATEST_RELEASE=$(curl -s https://api.github.com/repos/samyak-ib/ci-cd-toolkit-for-NW/releases/latest | jq -r .tag_name)
+            # Use GH_PAT for authentication to access private/restricted repos
+            LATEST_RELEASE=$(curl -s -H "Authorization: token ${GH_PAT}" \
+              https://api.github.com/repos/samyak-ib/ci-cd-toolkit-for-NW/releases/latest | jq -r .tag_name)
             VERSION=$(echo $LATEST_RELEASE | sed 's/^v//')
+            echo "Latest release: ${LATEST_RELEASE}, Version: ${VERSION}"
             
-            if ! pipx install https://github.com/samyak-ib/ci-cd-toolkit-for-NW/releases/download/${LATEST_RELEASE}/cicd_aihub-${VERSION}-py3-none-any.whl; then
+            # Download the wheel file with authentication
+            ASSET_ID=$(curl -s -H "Authorization: token ${GH_PAT}" \
+              https://api.github.com/repos/samyak-ib/ci-cd-toolkit-for-NW/releases/latest | \
+              jq -r '.assets[] | select(.name | contains(".whl")) | .id')
+            
+            curl -L -o cicd_aihub-${VERSION}-py3-none-any.whl \
+              -H "Authorization: token ${GH_PAT}" \
+              -H "Accept: application/octet-stream" \
+              "https://api.github.com/repos/samyak-ib/ci-cd-toolkit-for-NW/releases/assets/${ASSET_ID}"
+            
+            if ! pipx install cicd_aihub-${VERSION}-py3-none-any.whl; then
               echo "Failed to install from GitHub release. Aborting."
               exit 1
             fi
