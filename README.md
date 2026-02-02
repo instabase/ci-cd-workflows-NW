@@ -26,33 +26,33 @@ Go to your repository → **Settings** → **Secrets and variables** → **Actio
 
 #### Required Secrets
 
-| Secret Name | Description |
-|-------------|-------------|
-| `SOURCE_HOST_URL` | Source (Dev) Instabase host URL (e.g., `https://dev.instabase.com`) |
-| `SOURCE_TOKEN` | Source (Dev) API token |
-| `TARGET_HOST_URL` | Target (Prod) Instabase host URL (e.g., `https://prod.instabase.com`) |
-| `TARGET_TOKEN` | Target (Prod) API token |
+| Secret Name         | Description                                                            |
+| ------------------- | ---------------------------------------------------------------------- |
+| `SOURCE_HOST_URL` | Source (Dev) Instabase host URL (e.g.,`https://dev.instabase.com`)   |
+| `SOURCE_TOKEN`    | Source (Dev) API token                                                 |
+| `TARGET_HOST_URL` | Target (Prod) Instabase host URL (e.g.,`https://prod.instabase.com`) |
+| `TARGET_TOKEN`    | Target (Prod) API token                                                |
 
 #### mTLS Certificates (Required if mTLS is enabled)
 
 If your Instabase environments require mutual TLS authentication, add these secrets:
 
-| Secret Name | Description |
-|-------------|-------------|
-| `MTLS_SOURCE_CERT_CONTENT` | Source (Dev) certificate PEM file content |
-| `MTLS_SOURCE_KEY_CONTENT` | Source (Dev) private key PEM file content |
+| Secret Name                  | Description                                |
+| ---------------------------- | ------------------------------------------ |
+| `MTLS_SOURCE_CERT_CONTENT` | Source (Dev) certificate PEM file content  |
+| `MTLS_SOURCE_KEY_CONTENT`  | Source (Dev) private key PEM file content  |
 | `MTLS_TARGET_CERT_CONTENT` | Target (Prod) certificate PEM file content |
-| `MTLS_TARGET_KEY_CONTENT` | Target (Prod) private key PEM file content |
+| `MTLS_TARGET_KEY_CONTENT`  | Target (Prod) private key PEM file content |
 
 > **How to add certificate content:** Open your `.pem` file in a text editor, copy the entire content (including `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----` lines), and paste it as the secret value.
 
 #### Proxy Configuration (Optional)
 
-| Secret Name | Description |
-|-------------|-------------|
-| `PROXY_HOST` | Proxy server hostname |
-| `PROXY_PORT` | Proxy server port |
-| `PROXY_USER` | Proxy username (if auth required) |
+| Secret Name        | Description                       |
+| ------------------ | --------------------------------- |
+| `PROXY_HOST`     | Proxy server hostname             |
+| `PROXY_PORT`     | Proxy server port                 |
+| `PROXY_USER`     | Proxy username (if auth required) |
 | `PROXY_PASSWORD` | Proxy password (if auth required) |
 
 ---
@@ -108,28 +108,28 @@ Add a `config.json` file in your feature branch with the following structure:
 
 #### App Types
 
-| App Type | Configuration |
-|----------|---------------|
-| **Build App** | Set `is_advanced` to `false` and specify `project_id` |
-| **Advanced App** | Set `is_advanced` to `true` and specify `flow_path` |
+| App Type                     | Configuration                                                                  |
+| ---------------------------- | ------------------------------------------------------------------------------ |
+| **Build App**          | Set `is_advanced` to `false` and specify `project_id`                    |
+| **Advanced App**       | Set `is_advanced` to `true` and specify `flow_path`                      |
 | **Solution Build App** | Set `is_advanced` to `true` and specify both `sb_name` and `flow_name` |
 
 #### Required Fields
 
-| Field | Description | Required For |
-|-------|-------------|--------------|
-| `org` | Organization name | All apps (source & target) |
-| `workspace` | Workspace name | All apps (source & target) |
-| `app_id` | Application ID | Migrating existing app |
-| `deployment_id` | Deployment ID | Migrating deployment |
+| Field             | Description       | Required For               |
+| ----------------- | ----------------- | -------------------------- |
+| `org`           | Organization name | All apps (source & target) |
+| `workspace`     | Workspace name    | All apps (source & target) |
+| `app_id`        | Application ID    | Migrating existing app     |
+| `deployment_id` | Deployment ID     | Migrating deployment       |
 
 #### Optional Fields
 
-| Field | Description |
-|-------|-------------|
-| `dependencies` | List of dependencies for Advanced or Solution Build apps |
-| `rebuild` | Set to `true` to recreate the Build App project in target |
-| `app_details` | Required when creating a new app (leave `app_id` blank) |
+| Field            | Description                                                 |
+| ---------------- | ----------------------------------------------------------- |
+| `dependencies` | List of dependencies for Advanced or Solution Build apps    |
+| `rebuild`      | Set to `true` to recreate the Build App project in target |
+| `app_details`  | Required when creating a new app (leave `app_id` blank)   |
 
 ---
 
@@ -140,6 +140,7 @@ Add a `config.json` file in your feature branch with the following structure:
 **Trigger:** Push to `feature/*` branch
 
 **What it does:**
+
 1. Checks out the code
 2. Sets up mTLS certificates from secrets
 3. Installs the CI/CD toolkit
@@ -152,6 +153,7 @@ Add a `config.json` file in your feature branch with the following structure:
 **Trigger:** Automatically runs after "Fetch Latest Code" completes successfully
 
 **What it does:**
+
 1. Checks out the code from the feature branch
 2. Sets up mTLS certificates from secrets
 3. Installs the CI/CD toolkit
@@ -254,13 +256,13 @@ git push origin feature/my-migration
 
 ### Common Issues
 
-| Issue | Cause | Solution |
-|-------|-------|----------|
-| Workflow fails at "Setup mTLS certificates" | Missing certificate secrets | Add `MTLS_*_CONTENT` secrets |
-| `config.json file not found` | File not in repository root | Ensure `config.json` is in the root directory |
-| `app_id is missing or null` | Missing app_id for migration | Add `app_id` to source config, or provide `app_details` for new app |
-| API authentication failed | Invalid or expired token | Regenerate API token and update secret |
-| Certificate error | Invalid PEM content | Ensure full PEM content is copied including headers |
+| Issue                                       | Cause                        | Solution                                                                |
+| ------------------------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
+| Workflow fails at "Setup mTLS certificates" | Missing certificate secrets  | Add `MTLS_*_CONTENT` secrets                                          |
+| `config.json file not found`              | File not in repository root  | Ensure `config.json` is in the root directory                         |
+| `app_id is missing or null`               | Missing app_id for migration | Add `app_id` to source config, or provide `app_details` for new app |
+| API authentication failed                   | Invalid or expired token     | Regenerate API token and update secret                                  |
+| Certificate error                           | Invalid PEM content          | Ensure full PEM content is copied including headers                     |
 
 ### Checking Logs
 
