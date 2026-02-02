@@ -1,0 +1,26 @@
+{
+    "aiMajorVersion": "1",
+    "appReleaseVersion": "",
+    "author": "samyak.jain_instabase.com",
+    "contextAccount": "nationwidemtls",
+    "createdAtMs": "1770039656000",
+    "description": "No release notes",
+    "id": "66e9f7f4-83f7-4d14-b387-7c24b4e99d98",
+    "isCustomizable": false,
+    "linkSharingMode": "OFF",
+    "metadata": "{\"authors\": [\"samyak.jain_instabase.com\"], \"icon\": \"icon.png\", \"samples\": \"\", \"results\": \"\", \"schema\": \"schema.json\", \"project_id\": \"019b476a-bdcb-7bf0-8f6b-fbb4999d9654\", \"billing_model\": \"default\", \"has_project_snapshot\": true, \"org_context_type\": \"ENTERPRISE\", \"is_copy_of_existing_app\": false}",
+    "name": "Samyak's test project for mtls",
+    "owner": "samyak.jain_instabase.com",
+    "ownerFullName": "Samyak Jain",
+    "sharedAccounts": [
+        "nationwidemtls"
+    ],
+    "solutionType": "EXTRACTION",
+    "solution_path": "system/global/fs/Instabase Drive/Applications/Deployed/All/66e9f7f4-83f7-4d14-b387-7c24b4e99d98",
+    "state": "PRODUCTION",
+    "summary": "No summary",
+    "updateMode": "AUTO_UPDATE",
+    "updatedAtMs": "1770039662000",
+    "version": "1.1.0",
+    "visibility": "PRIVATE"
+}

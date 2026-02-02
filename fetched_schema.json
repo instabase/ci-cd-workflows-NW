@@ -1,0 +1,44 @@
+{
+    "1": {
+        "description": "",
+        "fields": {
+            "1": {
+                "data_type": "TEXT",
+                "description": "name",
+                "field_visibility": "VISIBLE",
+                "lines": [],
+                "model_type": "DEFAULT",
+                "name": "name",
+                "position": 0,
+                "prompt": "name",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            },
+            "23": {
+                "data_type": "TEXT",
+                "description": "Date",
+                "field_visibility": "VISIBLE",
+                "lines": [],
+                "model_type": "DEFAULT",
+                "name": "Date",
+                "position": 1,
+                "prompt": "Date",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            }
+        },
+        "name": "company"
+    },
+    "2": {
+        "description": "",
+        "fields": {},
+        "name": "Other"
+    },
+    "26": {
+        "description": "",
+        "fields": {},
+        "name": "AWJIbfkje"
+    },
+    "last_edited_at": "1770039625000",
+    "last_edited_class_at": "1770038150000"
+}
