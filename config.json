@@ -1,0 +1,25 @@
+{
+    "source": {
+      "is_advanced": false,
+      "project_id": "019b476a-bdcb-7bf0-8f6b-fbb4999d9654",
+      "org": "nationwidemtls",
+      "workspace": "test",
+      "app_id": "66e9f7f4-83f7-4d14-b387-7c24b4e99d98",
+      "app_details": {
+        "name": "Samyak's test project for mtls",
+        "version": "1.1.0",
+        "description": "Description of your app - added a new feature",
+        "release_notes": "Changes in this version - added a new feature"
+        }
+    },
+    "target": {
+      "org": "ib-internal",
+      "workspace": "SolEng_workspace",
+      "project_id": "019c1e1e-7947-7cf1-a9cc-a5aafde9b437"
+    },
+    "settings": {
+      "rebuild": false
+    },
+    "regression": {},
+    "release_notes": "Testing build project migration from nationwidemtls to ib-internal"
+}
