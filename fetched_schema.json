@@ -1,0 +1,27 @@
+{
+    "1": {
+        "description": "",
+        "fields": {
+            "1": {
+                "data_type": "TEXT",
+                "description": "name",
+                "field_visibility": "VISIBLE",
+                "lines": [],
+                "model_type": "DEFAULT",
+                "name": "name",
+                "position": 0,
+                "prompt": "name",
+                "prompt_schema": null,
+                "prompt_type": "basic"
+            }
+        },
+        "name": "company"
+    },
+    "2": {
+        "description": "",
+        "fields": {},
+        "name": "Other"
+    },
+    "last_edited_at": "1766429880000",
+    "last_edited_class_at": "1766429868000"
+}
