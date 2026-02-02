@@ -26,12 +26,27 @@ jobs:
       - name: Check out code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
+      - name: Setup mTLS certificates
+        run: |
+          mkdir -p $RUNNER_TEMP/certs
+          echo "${{ secrets.MTLS_SOURCE_CERT_CONTENT }}" > $RUNNER_TEMP/certs/source_cert.pem
+          echo "${{ secrets.MTLS_SOURCE_KEY_CONTENT }}" > $RUNNER_TEMP/certs/source_key.pem
+          echo "${{ secrets.MTLS_TARGET_CERT_CONTENT }}" > $RUNNER_TEMP/certs/target_cert.pem
+          echo "${{ secrets.MTLS_TARGET_KEY_CONTENT }}" > $RUNNER_TEMP/certs/target_key.pem
+          chmod 600 $RUNNER_TEMP/certs/*.pem
+          
+          # Export paths for subsequent steps
+          echo "MTLS_SOURCE_CERT=$RUNNER_TEMP/certs/source_cert.pem" >> $GITHUB_ENV
+          echo "MTLS_SOURCE_KEY=$RUNNER_TEMP/certs/source_key.pem" >> $GITHUB_ENV
+          echo "MTLS_TARGET_CERT=$RUNNER_TEMP/certs/target_cert.pem" >> $GITHUB_ENV
+          echo "MTLS_TARGET_KEY=$RUNNER_TEMP/certs/target_key.pem" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pipx
           # Attempt to install from local file first
-          VERSION=$(ls cicd_aihub-*-py3-none-any.whl | sed 's/cicd_aihub-\(.*\)-py3-none-any.whl/\1/' | head -n 1)
+          VERSION=$(ls cicd_aihub-*-py3-none-any.whl 2>/dev/null | sed 's/cicd_aihub-\(.*\)-py3-none-any.whl/\1/' | head -n 1)
 
           if [ -n "$VERSION" ]; then
             echo "Found local .whl file: cicd_aihub-${VERSION}-py3-none-any.whl"
