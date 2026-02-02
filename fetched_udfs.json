@@ -1,0 +1,98 @@
+{
+    "1": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Date Of Issue@0"
+            }
+        ],
+        "code": "\tif previous_line:\n\t  previous_line = previous_line.lower()\n\t  previous_line = previous_line.replace(\"date\",\"\").replace(\"of\",\"\").replace(\"issue\",\"\").replace(\".\",\" \")\n\t  return previous_line.upper()\n\telse:\n\t  return 'N/A'",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": null,
+        "lambda_udf_id": null,
+        "last_updated_at": "1770043531000",
+        "name": "remove_unwanted_chars",
+        "udf_type": "REFINER"
+    },
+    "2": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Date Of Expiry@0"
+            }
+        ],
+        "code": "\tif previous_line:\n\t  return previous_line.replace(\".\",\" \").lower()\n\telse:\n\t  return 'N/A'",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": null,
+        "lambda_udf_id": null,
+        "last_updated_at": "1770043531000",
+        "name": "remove_unwanted_chars",
+        "udf_type": "REFINER"
+    },
+    "3": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Place Of Birth@0"
+            }
+        ],
+        "code": "\tif previous_line.strip() == \"\":\n\t  return 'N/A'\n\telse:\n\t  previous_line =  previous_line.strip()\n\t  if ' ' in previous_line:\n\t    ls = previous_line.split()\n\t    return ' '.join(ls)\n\t  return previous_line",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": null,
+        "lambda_udf_id": null,
+        "last_updated_at": "1770043532000",
+        "name": "format_result",
+        "udf_type": "REFINER"
+    },
+    "4": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Issuing Authority@0"
+            }
+        ],
+        "code": "\tif previous_line.strip() == \"\":\n\t  return 'N/A'\n\telse:\n\t  previous_line =  previous_line.strip()\n\t  if ' ' in previous_line:\n\t    ls = previous_line.split()\n\t    return ' '.join(ls)\n\t  return previous_line",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": null,
+        "lambda_udf_id": null,
+        "last_updated_at": "1770043533000",
+        "name": "format_result",
+        "udf_type": "REFINER"
+    },
+    "5": {
+        "args": [],
+        "code": "\t# Import Python packages\n\timport json\n\timport re\n\t\n\t# Split the document text by newline characters\n\ttext_split = context['document_text'].split(\"\\n\")\n\t\n\t# Filter lines containing the filler character '<' and with a length of at least 44 characters\n\tfiller_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\")[:44] for x in text_split if \"<\" in x and len(x.replace(\" \", \"\")) >= 44]\n\t))\n\t\n\t# Filter lines with exactly 44 characters after removing spaces\n\tnum_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\") for x in text_split if len(x.replace(\" \", \"\")) == 44]\n\t))\n\t\n\t# Initialize MRZ string\n\tmrz_str = \"\"\n\t\n\t# Check conditions to assign MRZ string\n\tif len(filler_char_filter) == 2:\n\t    mrz_str = \"\".join(filler_char_filter)\n\telif len(num_char_filter) == 2:\n\t    mrz_str = \"\".join(num_char_filter)\n\telse:\n\t    mrz_str = \"Unable to read MRZ\"\n\t\n\t# Return the desired output\n\treturn mrz_str\n\t",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": null,
+        "lambda_udf_id": null,
+        "last_updated_at": "1770043533000",
+        "name": "extract_MRZ",
+        "udf_type": "REFINER"
+    },
+    "6": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "MRZ",
+                "value": "MRZ"
+            }
+        ],
+        "code": "\t\n\tif len(MRZ) == 88:\n\t\t\treturn None\n\telse:\n\t\t\treturn \"Error: Wrong MRZ\"",
+        "docstring": null,
+        "lambda_end_of_life": null,
+        "lambda_id": null,
+        "lambda_udf_id": null,
+        "last_updated_at": "1770043535000",
+        "name": "validate_MRZ",
+        "udf_type": "VALIDATIONS"
+    }
+}
