@@ -1,0 +1,347 @@
+{
+    "10382": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Given_Name",
+                "value": "Given Name"
+            }
+        ],
+        "code": "\t# Sample input fields (these would typically be extracted)\n\tmrz_line = \"P<PAKKALEEM<<MUHAMMAD<<<<<<<<<<<<<<<<<<<<<<\"\n\tGiven_Name = \"MUHAMMAD\"\n\t\n\t# MRZ Parsing Logic\n\tdef extract_given_name_from_mrz(mrz):\n\t    try:\n\t        parts = mrz.split(\"<<\")\n\t        given_name_raw = parts[1]\n\t        given_name = given_name_raw.replace(\"<\", \" \").strip()\n\t        return given_name\n\t    except IndexError:\n\t        return \"\"\n\t\n\t# Validation Logic\n\tdef validate_given_name_from_mrz(Given_Name, mrz_line):\n\t    expected_given_name = extract_given_name_from_mrz(mrz_line)\n\t    \n\t    if not Given_Name:\n\t        return \"Error: Given_Name is empty\"\n\t    \n\t    if Given_Name.strip().upper() != expected_given_name.upper():\n\t        return f\"Error: Given_Name '{Given_Name}' does not match MRZ value '{expected_given_name}'\"\n\t    \n\t    return None  # Passed\n\t\n\t# Run validation\n\tresult = validate_given_name_from_mrz(Given_Name, mrz_line)\n\tprint(result)\n\t",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "11",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1307207962:insaprd-use2-aihub-prd-docker-default-udf:10",
+        "last_updated_at": "1749140466000",
+        "name": "unnamed_custom_function",
+        "udf_type": "VALIDATIONS"
+    },
+    "10391": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Surname",
+                "value": "Surname"
+            }
+        ],
+        "code": "\tif Surname:\n\t    return Surname\n\telse:\n\t    return \"N/A\"\n\t",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "11",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2939906244:insaprd-use2-aihub-prd-docker-default-udf:10",
+        "last_updated_at": "1749188017000",
+        "name": "unnamed_custom_function",
+        "udf_type": "VALIDATIONS"
+    },
+    "10392": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Surname",
+                "value": "Surname"
+            }
+        ],
+        "code": "\tdef clean_surname(value):\n\t    if value and isinstance(value, str):\n\t        value = value.strip().upper()\n\t        if value != \"N/A\" and value != \"\":\n\t            return value\n\t    return \"N/A\"\n\t",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "11",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1986173720:insaprd-use2-aihub-prd-docker-default-udf:10",
+        "last_updated_at": "1749217105000",
+        "name": "unnamed_custom_function",
+        "udf_type": "VALIDATIONS"
+    },
+    "10393": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Surname@0"
+            }
+        ],
+        "code": "\tdef clean_surname(value):\n\t    if value and isinstance(value, str):\n\t        value = value.strip().upper()\n\t        if value != \"N/A\" and value != \"\":\n\t            return value\n\t    return \"N/A\"",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "11",
+        "lambda_udf_id": "v1:AWS_LAMBDA:9684975111:insaprd-use2-aihub-prd-docker-default-udf:10",
+        "last_updated_at": "1749218054000",
+        "name": "Surname",
+        "udf_type": "REFINER"
+    },
+    "12554": {
+        "args": [],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\t\n\t# Return the desired output\n\treturn None",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "12",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2585993182:insaprd-use2-aihub-prd-docker-default-udf:11",
+        "last_updated_at": "1756381509000",
+        "name": "unnamed_custom_function",
+        "udf_type": "REFINER"
+    },
+    "3178": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "MRZ",
+                "value": "MRZ"
+            }
+        ],
+        "code": "\t\n\tif len(MRZ) == 88:\n\t\t\treturn None\n\telse:\n\t\t\treturn \"Error: Wrong MRZ\"",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:7785892914:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1726047330000",
+        "name": "validate_MRZ",
+        "udf_type": "VALIDATIONS"
+    },
+    "3179": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "MRZ@1"
+            }
+        ],
+        "code": "\t# Import Python packages\n\timport json\n\timport re\n\t\n\t# Log statements using print()\n\t\n\t# Split the document text by newline characters\n\ttext_split = context['document_text'].split(\"\\n\")\n\t\n\t# Filter lines containing the filler character '<' and with a length of at least 44 characters\n\tfiller_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\")[:44] for x in text_split if \"<\" in x and len(x.replace(\" \", \"\")) >= 44]\n\t))\n\t\n\t# Filter lines with exactly 44 characters after removing spaces\n\tnum_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\") for x in text_split if len(x.replace(\" \", \"\")) == 44]\n\t))\n\t\n\t# Initialize MRZ string\n\tmrz_str = \"\"\n\t\n\t# Check conditions to assign MRZ string\n\tif len(filler_char_filter) == 2:\n\t    mrz_str = \"\".join(filler_char_filter)\n\telif len(num_char_filter) == 2:\n\t    mrz_str = \"\".join(num_char_filter)\n\telse:\n\t    mrz_str = previous_line\n\t\n\t# Return the desired output\n\treturn mrz_str\n\t",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1831619089:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1726042176000",
+        "name": "clean_func",
+        "udf_type": "REFINER"
+    },
+    "3184": {
+        "args": [],
+        "code": "\t# Import Python packages\n\timport json\n\timport re\n\t\n\t# Split the document text by newline characters\n\ttext_split = context['document_text'].split(\"\\n\")\n\t\n\t# Filter lines containing the filler character '<' and with a length of at least 44 characters\n\tfiller_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\")[:44] for x in text_split if \"<\" in x and len(x.replace(\" \", \"\")) >= 44]\n\t))\n\t\n\t# Filter lines with exactly 44 characters after removing spaces\n\tnum_char_filter = list(dict.fromkeys(\n\t    [x.replace(\" \", \"\") for x in text_split if len(x.replace(\" \", \"\")) == 44]\n\t))\n\t\n\t# Initialize MRZ string\n\tmrz_str = \"\"\n\t\n\t# Check conditions to assign MRZ string\n\tif len(filler_char_filter) == 2:\n\t    mrz_str = \"\".join(filler_char_filter)\n\telif len(num_char_filter) == 2:\n\t    mrz_str = \"\".join(num_char_filter)\n\telse:\n\t    mrz_str = \"Unable to read MRZ\"\n\t\n\t# Return the desired output\n\treturn mrz_str\n\t",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2528928707:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1726047798000",
+        "name": "extract_MRZ",
+        "udf_type": "REFINER"
+    },
+    "3185": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "MRZ",
+                "value": "MRZ"
+            }
+        ],
+        "code": "    if len(MRZ) != 88:\n        return 'Length of MRZ should be 88.'\n    return None",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:9156609406:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1726050832000",
+        "name": "validate_mrz_length",
+        "udf_type": "VALIDATIONS"
+    },
+    "3817": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Date Of Issue@0"
+            }
+        ],
+        "code": "\tif previous_line:\n\t  previous_line = previous_line.lower()\n\t  previous_line = previous_line.replace(\"date\",\"\").replace(\"of\",\"\").replace(\"issue\",\"\").replace(\".\",\" \")\n\t  return previous_line.upper()\n\telse:\n\t  return 'N/A'",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2027135174:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1728884291000",
+        "name": "remove_unwanted_chars",
+        "udf_type": "REFINER"
+    },
+    "3818": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Date Of Expiry@0"
+            }
+        ],
+        "code": "\tif previous_line:\n\t  return previous_line.replace(\".\",\" \").lower()\n\telse:\n\t  return 'N/A'",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1353369368:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1728888105000",
+        "name": "remove_unwanted_chars",
+        "udf_type": "REFINER"
+    },
+    "3819": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Date Of Expiry@1"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\t\n\t# Return the cleaned output\n\treturn previous_line",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2670243194:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1728884527000",
+        "name": "unnamed_custom_function",
+        "udf_type": "REFINER"
+    },
+    "3820": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Place Of Birth@0"
+            }
+        ],
+        "code": "\tif previous_line.strip() == \"\":\n\t  return 'N/A'\n\telse:\n\t  previous_line =  previous_line.strip()\n\t  if ' ' in previous_line:\n\t    ls = previous_line.split()\n\t    return ' '.join(ls)\n\t  return previous_line",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:3398062610:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1728884630000",
+        "name": "format_result",
+        "udf_type": "REFINER"
+    },
+    "3821": {
+        "args": [
+            {
+                "data_type": "LINE",
+                "name": "previous_line",
+                "value": "Issuing Authority@0"
+            }
+        ],
+        "code": "\tif previous_line.strip() == \"\":\n\t  return 'N/A'\n\telse:\n\t  previous_line =  previous_line.strip()\n\t  if ' ' in previous_line:\n\t    ls = previous_line.split()\n\t    return ' '.join(ls)\n\t  return previous_line",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "8",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1923295259:insaprd-use2-aihub-prd-docker-default-udf:7",
+        "last_updated_at": "1728884690000",
+        "name": "format_result",
+        "udf_type": "REFINER"
+    },
+    "689": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Given_Name",
+                "value": "Given Name"
+            }
+        ],
+        "code": "\tif Given_Name:\n\t\t# return None if validation succeeds\n\t\treturn None\n\telse:\n\t\t# return error string if validation fails\n\t\treturn \"Error: no value found\"\n\t\t",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "2",
+        "lambda_udf_id": "v1:AWS_LAMBDA:3910675219:insaprd-use2-aihub-prd-default-udf:2",
+        "last_updated_at": "1713168755000",
+        "name": "unnamed_custom_function",
+        "udf_type": "VALIDATIONS"
+    },
+    "711": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Passport_Number",
+                "value": "Passport Number"
+            }
+        ],
+        "code": "\tif Passport_Number:\n\t\t# return None if validation succeeds\n\t\treturn None\n\telse:\n\t\t# print(context['document_text'])\n\t\t# return error string if validation fails\n\t\treturn \"Error: no value found\"",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "2",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2736032327:insaprd-use2-aihub-prd-default-udf:2",
+        "last_updated_at": "1713266250000",
+        "name": "passport_number_validation",
+        "udf_type": "VALIDATIONS"
+    },
+    "804": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Passport_Number",
+                "value": "Passport Number"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\tflag = Passport_Number.isalnum()\n\tif flag:\n\t\t# Return None to indicate validation passed\n\t\treturn None\n\telse:\n\t\t# Return a string to indicate validation failed\n\t\treturn \"Error: Passport_Number has to be alphanumeric\"",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "3",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1501096606:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1714395246000",
+        "name": "passport_number_validation",
+        "udf_type": "VALIDATIONS"
+    },
+    "805": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Nationality",
+                "value": "Nationality"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\t# flag = Nationality != '' and all(chr.isalpha() or chr.isspace() for chr in Nationality)\n\tflag= not(Nationality.isnumeric())\n\tif flag:\n\t\t# Return None to indicate validation passed\n\t\treturn None\n\telse:\n\t\t# Return a string to indicate validation failed\n\t\treturn \"Error: Nationality can not be a number\"",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "3",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1859291472:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1714393835000",
+        "name": "nationality_validation",
+        "udf_type": "VALIDATIONS"
+    },
+    "806": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Date_of_Birth",
+                "value": "Date of Birth"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\tfrom datetime import datetime\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\tformat = \"%m/%d/%Y\"\n\tres = True\n\ttry:\n\t\tres = bool(datetime.strptime(Date_of_Birth, format))\n\texcept ValueError:\n\t    res = False\n\tif res:\n\t\t# Return None to indicate validation passed\n\t\treturn None\n\telse:\n\t\t# Return a string to indicate validation failed\n\t\treturn \"Error: Date_of_Birth should be in MM/DD/YYYY format\"",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "3",
+        "lambda_udf_id": "v1:AWS_LAMBDA:1065773351:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1714395087000",
+        "name": "date_of_birth_validation",
+        "udf_type": "VALIDATIONS"
+    },
+    "807": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Given_Name",
+                "value": "Given Name"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\tflag= not(Given_Name.isnumeric())\n\tif flag:\n\t\t# Return None to indicate validation passed\n\t\treturn None\n\telse:\n\t\t# Return a string to indicate validation failed\n\t\treturn \"Error: Given_Name can not be number\"",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "3",
+        "lambda_udf_id": "v1:AWS_LAMBDA:2854055619:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1714394627000",
+        "name": "given_name_validation",
+        "udf_type": "VALIDATIONS"
+    },
+    "808": {
+        "args": [
+            {
+                "data_type": "FIELD",
+                "name": "Surname",
+                "value": "Surname"
+            }
+        ],
+        "code": "\t# Import Python packages\n\t# import json\n\t\n\t# Log statements using print()\n\t# print(\"This will appear in the logs\")\n\t\n\tflag= not(Surname.isnumeric())\n\tif flag:\n\t\t# Return None to indicate validation passed\n\t\treturn None\n\telse:\n\t\t# Return a string to indicate validation failed\n\t\treturn \"Error: Surname can not be number\"",
+        "imports": [],
+        "lambda_end_of_life": null,
+        "lambda_id": "3",
+        "lambda_udf_id": "v1:AWS_LAMBDA:7367306588:insaprd-use2-aihub-prd-default-udf:6",
+        "last_updated_at": "1714394729000",
+        "name": "surname_validation",
+        "udf_type": "VALIDATIONS"
+    }
+}

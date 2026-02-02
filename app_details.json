@@ -1,0 +1,26 @@
+{
+    "aiMajorVersion": "1",
+    "appReleaseVersion": "",
+    "author": "Instabase",
+    "contextAccount": "ib-internal",
+    "createdAtMs": "1750727554000",
+    "description": "No release notes",
+    "id": "d7ea3f3e-156a-4ed5-8f68-06fa68058b60",
+    "isCustomizable": true,
+    "linkSharingMode": "OFF",
+    "metadata": "{\"authors\":[\"Instabase\"],\"billing_model\":\"default\",\"has_project_snapshot\":true,\"icon\":\"icon.png\",\"is_copy_of_existing_app\":false,\"org_context_type\":\"ENTERPRISE\",\"project_id\":\"a4676a76-a340-40eb-9d33-d9f4603132e9\",\"results\":\"\",\"samples\":\"output/s1_process_files\",\"schema\":\"schema.json\"}",
+    "name": "Passport",
+    "owner": "Instabase",
+    "ownerFullName": "Instabase",
+    "sharedAccounts": [
+        "ib-internal"
+    ],
+    "solutionType": "EXTRACTION",
+    "solution_path": "system/global/fs/Instabase Drive/Applications/Deployed/All/d7ea3f3e-156a-4ed5-8f68-06fa68058b60",
+    "state": "PRODUCTION",
+    "summary": "No summary",
+    "updateMode": "AUTO_UPDATE",
+    "updatedAtMs": "1753445226000",
+    "version": "2.0.0",
+    "visibility": "PRIVATE"
+}
