@@ -4,9 +4,9 @@
     "org": "nationwide-dev",
     "workspace": "Claims_Dev",
     "project_id": "019c497c-1148-74ac-9734-491f0395e747",
-    "app_id": "c8b75a65-7c1e-449b-aa98-9190ef1b1f19",
+    "app_id": "cf81a602-ff81-4db3-b217-71962c088545",
     "app_details": {
-      "name": "Claims Property and Auto App",
+      "name": "Claims Main Combined App",
       "version": "0.2.0",
       "description": "",
       "release_notes": "Claims migration performed on 2026-03-13"
