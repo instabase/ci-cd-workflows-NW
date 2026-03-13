@@ -55,16 +55,18 @@ jobs:
           else
             echo "No local .whl file found. Attempting to install from GitHub release."
             # Use GH_PAT for authentication to access private/restricted repos
-            LATEST_RELEASE=$(curl -s -H "Authorization: token ${GH_PAT}" \
-              https://api.github.com/repos/instabase/ci-cd-toolkit-NW/releases/latest | jq -r .tag_name)
+            echo "GH_PAT is set: ${GH_PAT:+yes}"
+            echo "Calling GitHub API..."
+            RESPONSE=$(curl -s -H "Authorization: token ${GH_PAT}" \
+              https://api.github.com/repos/instabase/ci-cd-toolkit-NW/releases/latest)
+            echo "API Response: $RESPONSE"
+
+            LATEST_RELEASE=$(echo "$RESPONSE" | jq -r .tag_name)
             VERSION=$(echo $LATEST_RELEASE | sed 's/^v//')
             echo "Latest release: ${LATEST_RELEASE}, Version: ${VERSION}"
-            
-            # Download the wheel file with authentication
-            ASSET_ID=$(curl -s -H "Authorization: token ${GH_PAT}" \
-              https://api.github.com/repos/instabase/ci-cd-toolkit-NW/releases/latest | \
-              jq -r '.assets[] | select(.name | contains(".whl")) | .id')
-            
+
+            ASSET_ID=$(echo "$RESPONSE" | jq -r '.assets[] | select(.name | contains(".whl")) | .id')
+            echo "Asset ID: ${ASSET_ID}"
             curl -L -o cicd_aihub-${VERSION}-py3-none-any.whl \
               -H "Authorization: token ${GH_PAT}" \
               -H "Accept: application/octet-stream" \
