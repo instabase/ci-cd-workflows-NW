@@ -1,0 +1,24 @@
+{
+  "source": {
+    "is_advanced": false,
+    "org": "nationwide-dev",
+    "workspace": "Claims_Dev",
+    "project_id": "019c497c-1148-74ac-9734-491f0395e747",
+    "app_id": "c8b75a65-7c1e-449b-aa98-9190ef1b1f19",
+    "app_details": {
+      "name": "Claims Property and Auto App",
+      "version": "0.2.0",
+      "description": "",
+      "release_notes": "Claims migration performed on 2026-03-13"
+    }
+  },
+  "target": {
+    "org": "nationwide",
+    "workspace": "Claims-Dev"
+  },
+  "settings": {
+    "rebuild": false
+  },
+  "regression": {},
+  "release_notes": "<Release Notes>"
+}
