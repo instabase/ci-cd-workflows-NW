@@ -1,0 +1,24 @@
+{
+    "source": {
+        "is_advanced": false,
+        "org": "nationwide-dev",
+        "workspace": "Claims_Dev",
+        "project_id": "019c497c-1148-74ac-9734-491f0395e747",
+        "app_id": "cf81a602-ff81-4db3-b217-71962c088545",
+        "app_details": {
+            "name": "Claims Main Combined App",
+            "version": "0.1.0",
+            "description": "",
+            "release_notes": "Claims migration performed on 2026-03-13"
+        }
+    },
+    "target": {
+        "org": "nationwide",
+        "workspace": "Claims-Dev"
+    },
+    "settings": {
+        "rebuild": true
+    },
+    "regression": {},
+    "release_notes": "Initial release of combined appv0.1.0"
+}
